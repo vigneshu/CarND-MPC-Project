@@ -3,6 +3,35 @@ Self-Driving Car Engineer Nanodegree Program
 
 ---
 
+## Project Rubric
+
+#### 1. The Model
+
+Model is making the car's trajectory into optimization problem. The components in MPC include state and actuators 
+State of the vehicle includes 'x', 'y', 'psi', velocity 'v', cross track error 'cte', error in heading direction 'epsi' of vehicle
+
+Actuators of the vehicle include steering angle (between -25 and 25) and throttle (-1 and 1m.s^2)
+
+The equations are as follows
+For position,
+x[t+1] = x[t] + v[t] * cos(psi[t]) * dt
+ y[t+1] = y[t] + v[t] * sin(psi[t]) * dt
+
+angle
+psi[t+1] = psi[t] + v[t] / Lf * delta[t] * dt
+
+velocity
+v[t+1] = v[t] + a[t] * dt
+
+Errors
+cte[t+1] = f(x[t]) - y[t] + v[t] * sin(epsi[t]) * dt
+epsi[t+1] = psi[t] - psides[t] + v[t] * delta[t] / Lf * dt
+
+#### 2. Timestep Length and Elapsed Duration (N & dt)
+
+We try and optimise in every step of MPC. Therefore, having a very small dt means we optimise the actuator values more frequently. Hence I tried small values such as 0.01, 0.02 upto 0.1. The smaller is better but more processor consuming and simulator is laggy. I finally ended up using 0,05 as dt. It is also better to choose the total time horizon less as the car moves fast and vehicle can go off the track. T was chosen to be 0.5. N which is T/dt therefore becomes 10
+
+
 ## Dependencies
 
 * cmake >= 3.5
