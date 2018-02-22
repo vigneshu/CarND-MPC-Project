@@ -31,6 +31,9 @@ epsi[t+1] = psi[t] - psides[t] + v[t] * delta[t] / Lf * dt
 
 We try and optimise in every step of MPC. Therefore, having a very small dt means we optimise the actuator values more frequently. Hence I tried small values such as 0.01, 0.02 upto 0.1. The smaller is better but more processor consuming and simulator is laggy. I finally ended up using 0,05 as dt. It is also better to choose the total time horizon less as the car moves fast and vehicle can go off the track. T was chosen to be 0.5. N which is T/dt therefore becomes 10
 
+#### 3. Latency
+To handle the latency, the solver estimates for 100 ms after the calculated moment was taken (after solving the MPC controller). See lines 173 to 175 and 20 to 21 of `MPC.cpp` to this effect.
+
 
 ## Dependencies
 
